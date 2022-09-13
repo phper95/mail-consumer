@@ -1,7 +1,7 @@
 package conf
 
 const (
-	AppName     = "product-consumer"
+	AppName     = "mail-consumer"
 	RunModeDev  = "dev"
 	RunModeProd = "prod"
 )

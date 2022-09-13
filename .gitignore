@@ -12,6 +12,6 @@ runtime/logs/
 tmp/
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
-product-consumer
+mail-consumer
 # Dependency directories (remove the comment below to include it)
 # vendor/

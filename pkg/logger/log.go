@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"gitee.com/phper95/pkg/file"
 	"log"
+	"mail-consumer/global"
 	"os"
 	"path/filepath"
-	"product-consumer/global"
 	"runtime"
 	"time"
 )

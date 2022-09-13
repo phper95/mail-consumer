@@ -8,9 +8,9 @@ import (
 	"gitee.com/phper95/pkg/trace"
 	"github.com/go-redis/redis/v7"
 	"go.uber.org/zap"
-	"product-consumer/conf"
-	"product-consumer/global"
-	"product-consumer/internal/consumer"
+	"mail-consumer/conf"
+	"mail-consumer/global"
+	"mail-consumer/internal/consumer"
 )
 
 func init() {
@@ -67,7 +67,7 @@ func main() {
 	shutdown.NewHook().Close(
 		func() {
 			//kafka consumer
-			consumer.CloseProductConsumer()
+			consumer.CloseConsumer()
 		},
 		func() {
 			//es

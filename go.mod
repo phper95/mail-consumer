@@ -1,4 +1,4 @@
-module product-consumer
+module mail-consumer
 
 go 1.16
 
@@ -9,6 +9,7 @@ require (
 	gitee.com/phper95/pkg/logger v0.0.0-20220717100747-3cf477b9a8d7
 	gitee.com/phper95/pkg/mq v0.0.0-20220717100747-3cf477b9a8d7
 	gitee.com/phper95/pkg/shutdown v0.0.0-20220717100747-3cf477b9a8d7
+	gitee.com/phper95/pkg/strutil v0.0.0-20220731025737-d3ae776d951b
 	gitee.com/phper95/pkg/trace v0.0.0-20220717100747-3cf477b9a8d7
 	//github.com/Shopify/sarama v1.29.1  //linux下使用此版本
 	github.com/Shopify/sarama v1.19.0 //windows下使用此版本
