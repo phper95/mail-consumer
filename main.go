@@ -1,6 +1,7 @@
 package main
 
 import (
+	"gitee.com/phper95/pkg/aws_s3"
 	"gitee.com/phper95/pkg/cache"
 	"gitee.com/phper95/pkg/es"
 	"gitee.com/phper95/pkg/logger"
@@ -18,6 +19,7 @@ func init() {
 	global.LOG = global.SetupLogger()
 	initRedisClient()
 	initMongoClient()
+	initS3()
 	initESClient()
 
 }
@@ -53,6 +55,14 @@ func initESClient() {
 		panic(err)
 	}
 	global.ES = es.GetClient(es.DefaultClient)
+}
+
+func initS3() {
+	err := aws_s3.InitService(aws_s3.DefaultClientName, global.CONFIG.S3.SK, "", global.CONFIG.S3.Region, global.CONFIG.S3.Host)
+	if err != nil {
+		global.LOG.Error("s3 init error", err, "client", aws_s3.DefaultClientName)
+		panic(err)
+	}
 }
 
 func initMongoClient() {

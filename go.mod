@@ -3,13 +3,14 @@ module mail-consumer
 go 1.16
 
 require (
+	gitee.com/phper95/pkg/aws_s3 v0.0.0-20220912222443-000d19030ff4
 	gitee.com/phper95/pkg/cache v0.0.0-20220717100747-3cf477b9a8d7
 	gitee.com/phper95/pkg/es v0.0.0-20220717102538-d460e19eb7dc
 	gitee.com/phper95/pkg/file v0.0.0-20220717100747-3cf477b9a8d7
 	gitee.com/phper95/pkg/logger v0.0.0-20220717100747-3cf477b9a8d7
 	gitee.com/phper95/pkg/mq v0.0.0-20220717100747-3cf477b9a8d7
 	gitee.com/phper95/pkg/shutdown v0.0.0-20220717100747-3cf477b9a8d7
-	gitee.com/phper95/pkg/strutil v0.0.0-20220731025737-d3ae776d951b
+	gitee.com/phper95/pkg/strutil v0.0.0-20220912222443-000d19030ff4
 	gitee.com/phper95/pkg/trace v0.0.0-20220717100747-3cf477b9a8d7
 	//github.com/Shopify/sarama v1.29.1  //linux下使用此版本
 	github.com/Shopify/sarama v1.19.0 //windows下使用此版本

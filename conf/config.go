@@ -8,6 +8,7 @@ type Config struct {
 	Redis         Redis         `mapstructure:"redis" yaml:"redis"`
 	Elasticsearch Elasticsearch `mapstructure:"elasticsearch" yaml:"elasticsearch"`
 	Kafka         Kafka         `mapstructure:"kafka" yaml:"kafka"`
+	S3            S3            `mapstructure:"s3" yaml:"s3"`
 	Zap           Zap           `mapstructure:"zap" yaml:"zap"`
 }
 
@@ -51,4 +52,12 @@ type Zap struct {
 
 type Kafka struct {
 	Hosts []string `mapstructure:"hosts" yaml:"hosts"`
+}
+
+type S3 struct {
+	Host   string `mapstructure:"host" yaml:"host"`
+	Region string `mapstructure:"region" yaml:"region"`
+	SK     string `mapstructure:"sk" yaml:"sk"`
+	Path   string `mapstructure:"path" yaml:"path"`
+	Bucket string `mapstructure:"bucket" yaml:"bucket"`
 }

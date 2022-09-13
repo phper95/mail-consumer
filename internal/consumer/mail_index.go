@@ -7,6 +7,7 @@ type MailIndex struct {
 	MailFrom string `json:"from"`
 	MailTo   string `json:"to"`
 	Subject  string `json:"subject"`
+	Content  string `json:"content"`
 	SendTime int64  `json:"send_time"`
 }
 

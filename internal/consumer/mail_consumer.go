@@ -3,6 +3,7 @@ package consumer
 import (
 	"encoding/json"
 	"fmt"
+	"gitee.com/phper95/pkg/aws_s3"
 	"gitee.com/phper95/pkg/es"
 	"gitee.com/phper95/pkg/mq"
 	"gitee.com/phper95/pkg/strutil"
@@ -39,6 +40,17 @@ func MsgHandler(msg *sarama.ConsumerMessage) (bool, error) {
 	if mailMsg.Operation == global.OperationDelete {
 		esClient.BulkDelete(global.IndexName, routing, strutil.Int64ToString(mailMsg.Uid))
 	} else {
+		b, err := aws_s3.GetS3Client(aws_s3.DefaultClientName).GetObj(global.CONFIG.S3.Path+strutil.Int64ToString(mailMsg.Id), global.CONFIG.S3.Bucket)
+		if err != nil {
+			global.LOG.Error(err, string(b))
+			if !aws_s3.IsNotFoundErr(err) {
+				return false, err
+			}
+			//找不到不需要重回队列
+			return true, nil
+		}
+		mailIndex.Content = strutil.BytesToString(&b)
+		fmt.Println(mailIndex)
 		esClient.BulkCreate(global.IndexName, routing, strutil.Int64ToString(mailMsg.Uid), mailIndex)
 	}
 	return true, nil
