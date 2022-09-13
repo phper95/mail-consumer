@@ -1,0 +1,32 @@
+app:
+  domain: localhost
+  run_mode: dev
+  time-format: 20060102
+
+database:
+  type: 'mysql'
+  user: 'root'
+  password: 'admin123'
+  host: '127.0.0.1:3306'
+  name: 'shop'
+  table_prefix:
+
+redis:
+  host: '127.0.0.1:6379'
+  password:
+  idle_timeout: 200
+
+elasticsearch:
+  hosts: ["https://127.0.0.1:9200"]
+  username: "elastic"
+  password: "elastic"
+
+kafka:
+  hosts: ["127.0.0.1:9092"]
+  order-topic: "shop-product"
+
+zap:
+  log-filepath: 'runtime/logs'
+  log-info-filename: 'info'
+  log-warn-filename: 'warn'
+  log-fiile-ext: 'log'
