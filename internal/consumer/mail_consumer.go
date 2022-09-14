@@ -24,8 +24,8 @@ func StartConsumer() {
 }
 
 func MsgHandler(msg *sarama.ConsumerMessage) (bool, error) {
-	mq.KafkaStdLogger.Printf("partion: %d ; offset : %d; msg : %s",
-		msg.Partition, msg.Offset, string(msg.Value))
+	//mq.KafkaStdLogger.Printf("partion: %d ; offset : %d; msg : %s",
+	//	msg.Partition, msg.Offset, string(msg.Value))
 	mailMsg := MailMsg{}
 	err := json.Unmarshal(msg.Value, &mailMsg)
 	if err != nil {
@@ -39,10 +39,10 @@ func MsgHandler(msg *sarama.ConsumerMessage) (bool, error) {
 	routing := fmt.Sprintf("%d_%d", mailMsg.Uid, mailMsg.Id)
 	if mailMsg.Operation == global.OperationDelete {
 		esClient.BulkDelete(global.IndexName, routing, strutil.Int64ToString(mailMsg.Uid))
-	} else {
+	} else if mailMsg.Operation == global.OperationCreate {
 		b, err := aws_s3.GetS3Client(aws_s3.DefaultClientName).GetObj(global.CONFIG.S3.Path+strutil.Int64ToString(mailMsg.Id), global.CONFIG.S3.Bucket)
 		if err != nil {
-			global.LOG.Error(err, string(b))
+			global.LOG.Error("GetObj err", err, string(b))
 			if !aws_s3.IsNotFoundErr(err) {
 				return false, err
 			}
@@ -50,7 +50,7 @@ func MsgHandler(msg *sarama.ConsumerMessage) (bool, error) {
 			return true, nil
 		}
 		mailIndex.Content = strutil.BytesToString(&b)
-		fmt.Println(mailIndex)
+		//fmt.Println(mailIndex)
 		esClient.BulkCreate(global.IndexName, routing, strutil.Int64ToString(mailMsg.Uid), mailIndex)
 	}
 	return true, nil
