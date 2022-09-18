@@ -36,9 +36,9 @@ func MsgHandler(msg *sarama.ConsumerMessage) (bool, error) {
 	mq.KafkaStdLogger.Printf("mail msg: %+v", mailMsg)
 	mailIndex := mailMsg.MailIndex
 	esClient := es.GetClient(es.DefaultClient)
-	routing := fmt.Sprintf("%d_%d", mailMsg.Uid, mailMsg.Id)
+	id := fmt.Sprintf("%d_%d", mailMsg.Uid, mailMsg.Id)
 	if mailMsg.Operation == global.OperationDelete {
-		esClient.BulkDelete(global.IndexName, routing, strutil.Int64ToString(mailMsg.Uid))
+		esClient.BulkDelete(global.IndexName, id, strutil.Int64ToString(mailMsg.Uid))
 	} else if mailMsg.Operation == global.OperationCreate {
 		b, err := aws_s3.GetS3Client(aws_s3.DefaultClientName).GetObj(global.CONFIG.S3.Path+strutil.Int64ToString(mailMsg.Id), global.CONFIG.S3.Bucket)
 		if err != nil {
@@ -51,7 +51,7 @@ func MsgHandler(msg *sarama.ConsumerMessage) (bool, error) {
 		}
 		mailIndex.Content = strutil.BytesToString(&b)
 		//fmt.Println(mailIndex)
-		esClient.BulkCreate(global.IndexName, routing, strutil.Int64ToString(mailMsg.Uid), mailIndex)
+		esClient.BulkCreate(global.IndexName, id, strutil.Int64ToString(mailMsg.Uid), mailIndex)
 	}
 	return true, nil
 }
